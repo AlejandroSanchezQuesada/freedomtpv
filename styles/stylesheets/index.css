@@ -1,0 +1,9 @@
+body{
+    background-image: url("../images/login/wallpaper.jpg");
+}
+
+.login_registro{
+    border-radius: 10px;
+    background-color: white;
+    padding-bottom: 2%;
+}
