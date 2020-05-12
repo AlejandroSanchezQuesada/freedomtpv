@@ -1,0 +1,30 @@
+* {
+    border: solid 1px red;
+}
+
+button {
+    margin: 1%;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+    border: solid 1px blue;
+}
+
+
+.botonproductos {
+    width: 100px;
+    height: 100px;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 30vw;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+

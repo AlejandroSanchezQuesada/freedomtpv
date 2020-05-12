@@ -23,7 +23,7 @@ var aplicacion = new Vue({
                     if (response.data.access_token) {
                         localStorage.setItem("access_token", response.data.access_token);
                     }
-                    window.location.href = 'blog'
+                    window.location.href = '/pages/main/main.html'
                 })
                 .catch(error => {
                     console.log(error.response)
@@ -42,7 +42,7 @@ var aplicacion = new Vue({
             })
                 .then(response => {
                     console.log("registrado!")
-                    window.location.href = 'blog'
+                    window.location.href = ''
                     /* if (response.data.access_token) {
                         localStorage.setItem("access_token", response.data.access_token);
                     } */

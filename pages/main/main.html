@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreedomTPV</title>
+
+    <!-- Bootstrap CSS e Iconos -->
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/a4fd43b371.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/styles/stylesheets/main/main.css">
+</head>
+
+<body>
+    <div class="container-fluid" id="app">
+        <div class="row">
+
+            <div class="col-9">
+                <div class="row">
+                    <div class="col-12">
+                        <button v-for="categoria in categorias" :key="categoria.id" type="button"
+                            class="btn btn-success">{{ categoria.nombre }}</button>
+
+                    </div>
+                    <div class="col-12">
+                        <button v-for="producto in productos" :key="producto.id" type="button"
+                            class="btn btn-success botonproductos" v-on:click="anyadirProducto(producto)"><img
+                                :src=producto.foto :alt=producto.nombre class="imgProducto">{{producto.precio}}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12 cajaUsuario">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-12">{{usuarios.name}}</div>
+                                    <div class="col-12"><button class="btn btn-success"
+                                            v-on:click="goToPanelControl()">Panel de Control</button></div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <img :src=usuarios.avatar :alt=usuarios.nombre>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        <h4>Pedido</h4>
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                            <table class="table table-bordered table-striped">
+                                <div v-for="productosElegido,index in productosElegidos" :key="productosElegido.id">
+                                    <button class="btn col-12"
+                                        v-on:click="borrarProductoPedido(index)">{{ productosElegido.nombre }} <span
+                                            :key="productosElegido.cantidad"
+                                            class="badge badge-pill badge-primary">{{ productosElegido.cantidad }}</span>
+                                        <span>{{productosElegido.precio * productosElegido.cantidad}} €</span>
+                                    </button>
+
+                                </div>
+                            </table>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12"> <h4>{{precioTotal}} €</h4></div>
+                                <div class="col-6"><button class="btn">Cobrar</button></div>
+                                <div class="col-6"> <button class="btn" data-toggle="modal"
+                                    data-target="#exampleModalCentered">Cancelar</button></div>
+                                
+                               
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Cancelar -->
+
+        <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenteredLabel">Cancelar Pedido</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de eliminar todo el pedido?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" v-on:click="vaciarPedido()">Eliminar
+                            Pedido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+    <!-- Vue y Axios -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/scripts/main/main.js"></script>
+</body>
+
+</html>
