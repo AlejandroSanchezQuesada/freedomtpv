@@ -1,1 +1,1 @@
-export const URL = "http://tpv.test/api/"
+localStorage.setItem('URL_API','http://tpv.test/api/')

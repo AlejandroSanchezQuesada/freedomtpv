@@ -14,7 +14,7 @@ var aplicacion = new Vue({
         /* Metodos HTTP */
         logear() {
         
-            axios.post('http://tpv.test/api/login', {
+            axios.post(localStorage.getItem('URL_API')+'login', {
                 email: this.email,
                 password: this.password
             })
@@ -32,7 +32,7 @@ var aplicacion = new Vue({
         },
         registrarse() {
           
-            axios.post('http://tpv.test/api/registrarse', {
+            axios.post(localStorage.getItem('URL_API')+'registrarse', {
                 name:this.name,
                 email: this.email,
                 password: this.password,
@@ -43,9 +43,6 @@ var aplicacion = new Vue({
                 .then(response => {
                     console.log("registrado!")
                     window.location.href = ''
-                    /* if (response.data.access_token) {
-                        localStorage.setItem("access_token", response.data.access_token);
-                    } */
                 })
                 .catch(error => {
                     console.log(error.response)
