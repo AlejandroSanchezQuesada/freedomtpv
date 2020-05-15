@@ -23,43 +23,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6">
-                <h1>FreedomTPV</h1>
-
-                <p>FreedomTPV es una aplicación web que consiste en la Administración de
-                    productos,categorías,
-                    usuarios y pedidos. El enfoque de la aplicación es un enfoque genérico lo cual te permite adaptarlo
-                    a cualquier
-                    tipo de negocio. Puede ser un taller de coches o un restaurante.</p>
-                <p>
-                    Las tecnologías que se han utilizado para la aplicación son:
-
-                <ul>
-                    <li>Backend: Laravel</li>
-                    <li>Frontend: VueJS, Librerias Jquery, Bootstrap</li>
-                    <li>Herramientas para el desarrollo: Postman, VSCode</li>
-                </ul>
-                </p>
-                <p>
-                    FreedomTPV es una aplicación completamente gratuita. Esto es un despliegue para comprobar el
-                    funcionamiento de la aplicación,
-                    Puedes descargar tanto la parte visual, como si quieres hacer la tuya utilizando únicamente la API.
-                </p>
-                <p> Aconsejo si vas a utilizar este programa a nivel profesional, cambiar este texto adaptado para la
-                    empresa</p>
-
-
-                <p>Desarrollado por: Alejandro Sánchez Quesada</p>
-
-                <a href="https://github.com/AlejandroSanchezQuesada/tpv"><i class="fab fa-github">API</i></a>
-                <a href=""><i class="fab fa-github">Visual</i></a>
-
-                </p>
-            </div>
-
-
-
-            <div class="col-6" id="app">
+            <div class="col-12" id="app">
                 <br>
                 <div class="col-12 login_registro" v-if="login_registro">
                     <h2>Login <i class="fas fa-sign-in-alt"></i></h2>
@@ -116,12 +80,12 @@
                     </div>
 
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="empleado" name="empleado" value=false class="custom-control-input"
+                        <input type="radio" id="empleado" name="empleado" value=0 class="custom-control-input"
                             v-model="jefe">
                         <label class="custom-control-label" for="empleado">Empleado</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="jefe" name="jefe" value=true class="custom-control-input"
+                        <input type="radio" id="jefe" name="jefe" value=1 class="custom-control-input"
                             v-model="jefe">
                         <label class="custom-control-label" for="jefe">Jefe</label>
                     </div>

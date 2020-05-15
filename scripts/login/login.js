@@ -4,7 +4,7 @@ var aplicacion = new Vue({
         email: "",
         password: "",
         password_confirmation: "",
-        jefe: false,
+        jefe: 0,
         name: "",
         avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Microsoft_Account.svg/1200px-Microsoft_Account.svg.png",
         login_registro: true

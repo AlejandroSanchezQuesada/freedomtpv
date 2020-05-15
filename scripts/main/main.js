@@ -12,10 +12,11 @@ var aplicacion = new Vue({
         puestoElegido: null,
         productosElegidos: [],
         precioPedidoTotal: 0,
-        ingresoCliente:0
+        ingresoCliente: 0,
+        pedidoActual: null,
 
     },
-   async mounted() {
+    async mounted() {
 
         this.obtenerProductos()
         this.obtenerCategorias()
@@ -26,27 +27,28 @@ var aplicacion = new Vue({
     methods: {
         /* Metodos HTTP */
         obtenerProductos() {
-            axios.get(localStorage.getItem('URL_API')+'productos',
+            axios.get(localStorage.getItem('URL_API') + 'productos',
                 { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
                 .then(response => (this.productos = response.data.data))
         },
         obtenerCategorias() {
-            axios.get(localStorage.getItem('URL_API')+'categorias',
+            axios.get(localStorage.getItem('URL_API') + 'categorias',
                 { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
                 .then(response => (this.categorias = response.data.data))
         },
         obtenerPuestos() {
-            axios.get(localStorage.getItem('URL_API')+'puestos',
+            axios.get(localStorage.getItem('URL_API') + 'puestos',
                 { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
-                .then(response => (this.puestos = response.data))
+                .then(response => (this.puestos = response.data.data))
         },
         obtenerUsuarioLogeado() {
-            axios.get(localStorage.getItem('URL_API')+'userlogged',
+            axios.get(localStorage.getItem('URL_API') + 'userlogged',
                 { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
                 .then(response => (this.usuarios = response.data))
         },
         obtenerProductosPorCategoria(categoria) {
-            axios.post(localStorage.getItem('URL_API')+'findproductobycategoria',
+            axios.post(localStorage.getItem('URL_API') + 'findproductobycategoria',
+                /* Aqui va el contenido a enviar en el POST */
                 { "id": categoria },
                 { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
                 .then(response => {
@@ -56,8 +58,47 @@ var aplicacion = new Vue({
                     console.log(response)
                 })
         },
+        crearPedido() {
+            axios.post(localStorage.getItem('URL_API') + 'pedidos',
+                /* Aqui va el contenido a enviar en el POST */
+                {
+                    "usuario": this.usuarios.id,
+                    "puesto": this.puestoElegido.id,
+                    "ingreso": this.precioPedidoTotal,
+                    "fecha_pedido": "2020-05-15"
+                },
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => {
+                    this.pedidoActual = response.data.data.id
+                    console.log(response)
+                })
+                .catch(() => {
+                    console.log(response)
+                })
+        },
+        anyadirProductosAlPedido(producto, cantidad) {
+            axios.post(localStorage.getItem('URL_API') + 'productosdepedidos',
+                /* Aqui va el contenido a enviar en el POST */
+                {
+                    "pedido": this.pedidoActual,
+                    "producto": producto,
+                    "cantidad": cantidad
+                },
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(() => {
+                    console.log(response)
+                })
+        },
+        cancelarPedido() {
+            axios.delete(localStorage.getItem('URL_API') + 'pedidos/' + this.pedidoActual,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => console.log(response))
+        },
 
-/* Metodos para dar funcionalidad */
+        /* Metodos para dar funcionalidad */
 
         anyadirProducto(producto) {
             if (this.productosElegidos.includes(producto)) {
@@ -80,14 +121,64 @@ var aplicacion = new Vue({
             }
         },
         vaciarPedido() {
-            console.log("HOLA")
             this.productosElegidos = []
+            this.puestoElegido = null
+            this.ingresoCliente = 0
+            this.cancelarPedido()
         },
-        cobrar(){
-            alert("lets go money printer go brrr!")
+        creandoPedido() {
+            var respuesta = "Ha ocurrido un error, ";
+            var correcto = true;
+
+            if (this.puestoElegido == null) {
+                respuesta += "No has elegido puesto, "
+                correcto = false;
+
+            }
+
+            if (correcto == true) {
+
+                this.crearPedido()
+
+
+            } else {
+                alert(respuesta)
+            }
         },
-        sumaCliente(cantidad){
-            this.ingresoCliente+=cantidad
+
+        cobrar() {
+            var respuesta = "Ha ocurrido un error, ";
+            var correcto = true;
+
+            if (this.ingresoCliente - this.precioPedidoTotal < 0) {
+                respuesta += "Ingreso insuficiente, "
+                correcto = false;
+            }
+
+            if (correcto == true) {
+                this.productosElegidos.forEach(producto => {
+                    this.anyadirProductosAlPedido(producto.id, producto.cantidad)
+                });
+
+                this.productosElegidos = []
+                this.puestoElegido = null
+                this.ingresoCliente = 0
+
+
+            } else {
+                alert(respuesta)
+            }
+
+
+
+
+        },
+
+        sumaCliente(cantidad) {
+            this.ingresoCliente += cantidad
+        },
+        escogerPuesto(puesto) {
+            this.puestoElegido = puesto
         },
 
 

@@ -39,13 +39,19 @@
                     <div class="col-12">
                         <button class="btn btn-success" v-on:click="obtenerProductos()">General</button>
                         <button v-for="categoria in categorias" :key="categoria.id" type="button"
-                            class="btn btn-success" v-on:click="obtenerProductosPorCategoria(categoria.id)">{{ categoria.nombre }}</button>
+                            class="btn btn-success"
+                            v-on:click="obtenerProductosPorCategoria(categoria.id)">{{ categoria.nombre }}</button>
 
                     </div>
                     <div class="col-12">
                         <button v-for="producto in productos" :key="producto.id" type="button"
                             class="btn btn-success botonproductos" v-on:click="anyadirProducto(producto)"><img
                                 :src=producto.foto :alt=producto.nombre class="imgProducto">{{producto.precio}}
+                        </button>
+                    </div>
+                    <div class="col-12">
+                        <button v-for="puesto in puestos" :key="puesto.id" type="button" class="btn btn-success"
+                            v-on:click="escogerPuesto(puesto)">{{puesto.nombre}}
                         </button>
                     </div>
                 </div>
@@ -69,7 +75,10 @@
 
                     </div>
                     <div class="col-12">
-                        <h4>Pedido</h4>
+                        <h4>Pedido - <span v-for="puestoNombre in puestoElegido" :key="puestoNombre.id">
+                                {{ puestoNombre }}
+                            </span></h4>
+
                         <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
                             <table class="table table-bordered table-striped">
@@ -90,7 +99,7 @@
                                     <h4>{{precioTotal}} €</h4>
                                 </div>
                                 <div class="col-6"><button class="btn" data-toggle="modal"
-                                        data-target="#modalCobrar">Cobrar</button></div>
+                                        data-target="#modalCobrar" v-on:click="creandoPedido()">Cobrar</button></div>
                                 <div class="col-6"> <button class="btn" data-toggle="modal"
                                         data-target="#modalCancelar">Cancelar</button></div>
 
@@ -118,30 +127,48 @@
                     </div>
                     <div class="modal-body">
                         <div class="dinero">
-                            <div class="dineromonedas"> <button v-on:click="sumaCliente(0.01)"><img src="../../styles/images/tpv/dinero/monedas/1cent.png" alt="1cent" class="monedas"></button>
-                                <button v-on:click="sumaCliente(0.02)"><img src="../../styles/images/tpv/dinero/monedas/2cent.png" alt="2cent" class="monedas"></button>
-                                <button v-on:click="sumaCliente(0.05)"><img src="../../styles/images/tpv/dinero/monedas/5cent.png" alt="5cent" class="monedas"></button>
-                                <button v-on:click="sumaCliente(0.10)"><img src="../../styles/images/tpv/dinero/monedas/10cent.png" alt="10cent" class="monedas"></button>
-                                <button v-on:click="sumaCliente(0.20)"><img src="../../styles/images/tpv/dinero/monedas/20cent.png" alt="20cent" class="monedas"></button>
-                                <button v-on:click="sumaCliente(0.50)"><img src="../../styles/images/tpv/dinero/monedas/50cent.png" alt="50cent" class="monedas"></button>
-                                <button v-on:click="sumaCliente(1)"><img src="../../styles/images/tpv/dinero/monedas/1euro.png" alt="1euro" class="monedas"></button>
-                                <button v-on:click="sumaCliente(2)"><img src="../../styles/images/tpv/dinero/monedas/2euro.png" alt="2euro" class="monedas"></button></div>
-                            <div class="dinerobilletes">  <button v-on:click="sumaCliente(5)"><img src="../../styles/images/tpv/dinero/billetes/5euro.png" alt="5euro" class="billetes"></button>
-                                <button v-on:click="sumaCliente(10)"><img src="../../styles/images/tpv/dinero/billetes/10euro.png" alt="10euro" class="billetes"></button>
-                                <button v-on:click="sumaCliente(20)"><img src="../../styles/images/tpv/dinero/billetes/20euro.png" alt="20euro" class="billetes"></button>
-                                <button v-on:click="sumaCliente(50)"><img src="../../styles/images/tpv/dinero/billetes/50euro.png" alt="50euro" class="billetes"></button></div>
-                           
-                          
+                            <div class="dineromonedas"> <button v-on:click="sumaCliente(0.01)"><img
+                                        src="../../styles/images/tpv/dinero/monedas/1cent.png" alt="1cent"
+                                        class="monedas"></button>
+                                <button v-on:click="sumaCliente(0.02)"><img
+                                        src="../../styles/images/tpv/dinero/monedas/2cent.png" alt="2cent"
+                                        class="monedas"></button>
+                                <button v-on:click="sumaCliente(0.05)"><img
+                                        src="../../styles/images/tpv/dinero/monedas/5cent.png" alt="5cent"
+                                        class="monedas"></button>
+                                <button v-on:click="sumaCliente(0.10)"><img
+                                        src="../../styles/images/tpv/dinero/monedas/10cent.png" alt="10cent"
+                                        class="monedas"></button>
+                                <button v-on:click="sumaCliente(0.20)"><img
+                                        src="../../styles/images/tpv/dinero/monedas/20cent.png" alt="20cent"
+                                        class="monedas"></button>
+                                <button v-on:click="sumaCliente(0.50)"><img
+                                        src="../../styles/images/tpv/dinero/monedas/50cent.png" alt="50cent"
+                                        class="monedas"></button>
+                                <button v-on:click="sumaCliente(1)"><img
+                                        src="../../styles/images/tpv/dinero/monedas/1euro.png" alt="1euro"
+                                        class="monedas"></button>
+                                <button v-on:click="sumaCliente(2)"><img
+                                        src="../../styles/images/tpv/dinero/monedas/2euro.png" alt="2euro"
+                                        class="monedas"></button></div>
+                            <div class="dinerobilletes"> <button v-on:click="sumaCliente(5)"><img
+                                        src="../../styles/images/tpv/dinero/billetes/5euro.png" alt="5euro"
+                                        class="billetes"></button>
+                                <button v-on:click="sumaCliente(10)"><img
+                                        src="../../styles/images/tpv/dinero/billetes/10euro.png" alt="10euro"
+                                        class="billetes"></button>
+                                <button v-on:click="sumaCliente(20)"><img
+                                        src="../../styles/images/tpv/dinero/billetes/20euro.png" alt="20euro"
+                                        class="billetes"></button>
+                                <button v-on:click="sumaCliente(50)"><img
+                                        src="../../styles/images/tpv/dinero/billetes/50euro.png" alt="50euro"
+                                        class="billetes"></button></div>
                         </div>
+                        <div><button v-on:click="ingresoCliente = 0">Limpiar</button></div>
 
                         <h3>Cliente ingresa : {{ingresoCliente}} €</h3>
                         <h3>Total :{{precioTotal}}</h3>
                         <h3>Cambio : {{ ingresoCliente - precioTotal }} €</h3>
-                       
-
-
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" v-on:click="cobrar()">Cobrar Pedido</button>
