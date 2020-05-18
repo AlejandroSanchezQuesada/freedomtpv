@@ -75,9 +75,7 @@
 
                     </div>
                     <div class="col-12">
-                        <h4>Pedido - <span v-for="puestoNombre in puestoElegido" :key="puestoNombre.id">
-                                {{ puestoNombre }}
-                            </span></h4>
+                        <h4>Pedido - {{puestoElegido.nombre}}</h4>
 
                         <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
@@ -98,8 +96,8 @@
                                 <div class="col-12">
                                     <h4>{{precioTotal}} €</h4>
                                 </div>
-                                <div class="col-6"><button class="btn" data-toggle="modal"
-                                        data-target="#modalCobrar" v-on:click="creandoPedido()">Cobrar</button></div>
+                                <div class="col-6"><button class="btn" data-toggle="modal" data-target="#modalCobrar"
+                                        v-on:click="creandoPedido()">Cobrar</button></div>
                                 <div class="col-6"> <button class="btn" data-toggle="modal"
                                         data-target="#modalCancelar">Cancelar</button></div>
 
@@ -171,7 +169,12 @@
                         <h3>Cambio : {{ ingresoCliente - precioTotal }} €</h3>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                            onclick="printJS({ printable: 'imprimirTicket', type: 'html' })">
+                            Imprimir Ticket
+                        </button>
                         <button type="button" class="btn btn-primary" v-on:click="cobrar()">Cobrar Pedido</button>
+
                     </div>
                 </div>
             </div>
@@ -206,7 +209,29 @@
 
 
 
+        <div class="ticket" id="imprimirTicket">
+            <h1 class="tituloTicket">Freedom TPV - IES Dos Mares</h1>
+            <h3 class="puestoTicket"> Puesto : {{puestoElegido.nombre}}
+            </h3>
+            <h2>Pedido nº : {{pedidoActual}}</h2>
+
+            <div v-for="producto in productosElegidos" :key="producto.id">
+                
+                <p class="productoIndividualTicket">
+                    {{ producto.nombre }}  {{ producto.descripcion }} {{ producto.descripcion }} {{ producto.precio }} x{{ producto.cantidad }}
+                </p>
+
+            </div>
+            <p class="totalPedidoTicket">Total Pedido : {{precioTotal}}</p>
+            <br>
+            <p class="atendidoTicket">Atendido por : {{usuarios.name}} </p>
+
+        </div>
+
+
+
     </div>
+
 
 
 
@@ -217,6 +242,9 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/scripts/main/main.js"></script>
+    <!-- Print JS Libreria -->
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 </body>
 
 </html>

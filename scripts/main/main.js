@@ -8,8 +8,8 @@ var aplicacion = new Vue({
         usuarios: [],
         puestos: [],
         listaPedidos: [],
-        categoriaElegida: null,
-        puestoElegido: null,
+        categoriaElegida: [],
+        puestoElegido: [],
         productosElegidos: [],
         precioPedidoTotal: 0,
         ingresoCliente: 0,
@@ -108,6 +108,7 @@ var aplicacion = new Vue({
             } else {
                 producto.cantidad = 1;
                 this.productosElegidos.push(producto);
+                this.actualizaDOM();
             }
 
         },
@@ -121,10 +122,15 @@ var aplicacion = new Vue({
             }
         },
         vaciarPedido() {
+            
             this.productosElegidos = []
-            this.puestoElegido = null
+            this.puestoElegido = []
             this.ingresoCliente = 0
-            this.cancelarPedido()
+            if ( this.pedidoActual != null) {
+                this.cancelarPedido()
+            }
+            
+            
         },
         creandoPedido() {
             var respuesta = "Ha ocurrido un error, ";
