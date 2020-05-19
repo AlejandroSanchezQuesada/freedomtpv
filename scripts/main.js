@@ -167,9 +167,11 @@ var aplicacion = new Vue({
                 });
 
                 this.productosElegidos = []
-                this.puestoElegido = null
+                this.puestoElegido = []
                 this.ingresoCliente = 0
+                this.actualizaDOM()
 
+                
 
             } else {
                 alert(respuesta)
@@ -191,7 +193,7 @@ var aplicacion = new Vue({
 
 
         goToPanelControl() {
-            window.location.href = '/pages/dashboard/dashboard.html'
+            window.location.href = '/pages/dashboard.html'
         },
 
         actualizaDOM() {
