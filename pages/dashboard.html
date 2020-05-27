@@ -33,15 +33,524 @@
 <body>
     <div class="container-fluid" id="app">
 
-        <h1>Empezando Panel de control</h1>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Logo y titulo de la barra de navegacion -->
+            <a class="navbar-brand" href="./main.html">FreedomTPV <img src="../styles/images/logo/leaf.png" alt="logo"
+                    class="logoImage"></a>
+            <!-- Opciones de la barr de navegacion -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active" id="navHome">
+                        <a class="nav-link" v-on:click="mostrarHome">Home</a>
+                    </li>
+                    <li class="nav-item" id="navTablas">
+                        <a class="nav-link" v-on:click="mostrarTablas">Tablas <i class="fas fa-table"></i></a>
+                    </li>
+                    <li class="nav-item" id="navGraficos">
+                        <a class="nav-link" v-on:click="mostrarGraficos">Mas vendidos <i
+                                class="fas fa-chart-pie"></i></a>
+                    </li>
 
+                </ul>
+                <div class="row">
+                    <div class="dropdown">
+                        <div class="col-12 dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"><img :src="usuarioLogeado.avatar"
+                                alt="FotoUsuario" class="img_avatar"></div>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <a class="dropdown-item" v-on:click="cerrarSesion">Cerrar Sesión <i
+                                    class="fas fa-power-off"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </nav>
+
+        <div class="mostrarHome mostrarOpcionesTablas">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Panel de Administración de FreedomTPV</h1>
+
+                    <article>
+                        <p>En el panel de administración tienes varias opciones para poder personalizar tu experiencia
+                            en FreedomTPV.
+                        </p>
+                        <p>La sección de Tablas, muestra todas las tablas para poder utilizar FreedomTPV, puedes
+                            crear/editar/eliminar
+                        <ul>
+                            <li>Productos</li>
+                            <li>Categorias</li>
+                            <li>Pedidos</li>
+                            <li>Productos de Pedidos</li>
+                            <li>Puestos</li>
+                            <li>Usuarios</li>
+                        </ul>
+                        </p>
+                    </article>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-success">Ayuda</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#contactoModal">Contacto</button>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+        <div class="mostrarTablas mostrarOpcionesTablas">
+            <div class="row">
+                <div class="col-9">
+                    <button class="btn btn-success" v-on:click="mostrarProductos">Productos</button>
+                    <button class="btn btn-success" v-on:click="mostrarCategorias">Categorias</button>
+                    <button class="btn btn-success" v-on:click="mostrarPuestos">Puestos</button>
+                    <button class="btn btn-success" v-on:click="mostrarPedidos">Pedidos</button>
+                    <button class="btn btn-success" v-on:click="mostrarProductosDePedidos">ProductosDePedidos</button>
+                    <button class="btn btn-success" v-on:click="mostrarUsuarios">Usuarios</button>
+                </div>
+                <div class="col-3">
+                    <input class="form-control" type="text" placeholder="Buscar... ">
+                </div>
+
+
+
+
+            </div>
+
+            <!-- Fila con las agrupaciones de tablas -->
+            <div class="row">
+                <!-- Div Usuarios -->
+
+                <div class="col-12 divUsuarios divTablas cscroll">
+                    <!-- Div de creacion e imprimir la tabla -->
+                    <div class="col-12">
+                        <!-- Comprobar si es jefe! -->
+                        <div v-if="usuarioLogeado.jefe == 1">
+                            <button class="btn btn-success" data-toggle="modal" data-target="#crearUsuario">Crear <i
+                                    class="fas fa-plus-circle"></i></button>
+                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Jefe</th>
+                                <!-- Comprobar si es jefe! -->
+                                <th v-if="usuarioLogeado.jefe == 1">Editar</th>
+                                <th v-if="usuarioLogeado.jefe == 1">Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="usuario in usuarios.data" :key="usuario.id">
+                                <td>{{ usuario.id }}</td>
+                                <td>{{ usuario.email }}</td>
+                                <td>{{ usuario.name }}</td>
+                                <td>{{ usuario.jefe }}</td>
+                                <td v-if="usuarioLogeado.jefe == 1"><button class="btn btn-success"><i
+                                            class="fas fa-edit"></i></button></td>
+                                <td v-if="usuarioLogeado.jefe == 1"><button class="btn btn-success"><i
+                                            class="fas fa-trash-alt"></i></button></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div> <!-- Fin divUsuarios -->
+
+                <!-- DivProductos -->
+                <div class="col-12 divProductos divTablas cscroll">
+                    <!-- Div de creacion e imprimir la tabla -->
+                    <div class="col-12">
+                        <!-- Comprobar si es jefe! -->
+                        <div v-if="usuarioLogeado.jefe == 1">
+                            <button class="btn btn-success" data-toggle="modal" data-target="#crearProducto">Crear <i
+                                    class="fas fa-plus-circle"></i></button>
+                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                        </div>
+                    </div>
+
+
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Categoria</th>
+                                <th>Precio</th>
+                                <th>Foto</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="producto,index in productos" :key="index">
+                                <td>{{ producto.id }}</td>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.categoria.nombre }}</td>
+                                <td>{{ producto.precio }}</td>
+                                <td>{{ producto.foto }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div> <!-- Fin divProductos -->
+
+                <!-- DivCategorias -->
+                <div class="col-12 divCategorias divTablas cscroll">
+                    <div class="col-12">
+                        <!-- Comprobar si es jefe! -->
+                        <div v-if="usuarioLogeado.jefe == 1">
+                            <button class="btn btn-success" data-toggle="modal" data-target="#crearCategoria">Crear <i
+                                    class="fas fa-plus-circle"></i></button>
+                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="categoria in categorias" :key="categoria.id">
+                                <td>{{ categoria.id }}</td>
+                                <td>{{ categoria.nombre }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div> <!-- Fin DivCategorias -->
+
+                <!-- DivPuestos -->
+                <div class="col-12 divPuestos divTablas cscroll">
+                    <div class="col-12">
+                        <!-- Comprobar si es jefe! -->
+                        <div v-if="usuarioLogeado.jefe == 1">
+                            <button class="btn btn-success" data-toggle="modal" data-target="#crearPuesto">Crear <i
+                                    class="fas fa-plus-circle"></i></button>
+                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="puesto,index in puestos" :key="index">
+                                <td>{{ puesto.id }}</td>
+                                <td>{{ puesto.nombre }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div> <!-- Fin DivPuestos -->
+
+                <!-- DivPedidos -->
+                <div class="col-12 divPedidos divTablas cscroll">
+                    <div class="col-12">
+                        <!-- Comprobar si es jefe! -->
+                        <div v-if="usuarioLogeado.jefe == 1">
+                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Usuario</th>
+                                <th>Puesto</th>
+                                <th>Fecha Pedido</th>
+                                <th>Ingreso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="pedido in pedidos.data" :key="pedido.id">
+                                <td>{{ pedido.id }}</td>
+                                <td>{{ pedido.usuario.name }}</td>
+                                <td>{{ pedido.puesto.nombre }}</td>
+                                <td>{{ pedido.fecha_pedido }}</td>
+                                <td>{{ pedido.ingreso }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div> <!-- Fin DivPedidos -->
+
+                <!-- DivProductosDePedidos -->
+                <div class="col-12 divProductosDePedidos divTablas cscroll">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Producto</th>
+                                <th>Pedido</th>
+                                <th>Cantidad</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="productodepedidoSingular in productos_de_pedidos.data"
+                                :key="productodepedidoSingular.id">
+                                <td>{{ productodepedidoSingular.id }}</td>
+                                <td>{{ productodepedidoSingular.producto.nombre }}</td>
+                                <td>{{ productodepedidoSingular.pedido.id }}</td>
+                                <td>{{ productodepedidoSingular.cantidad }}</td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div> <!-- Fin DivPedidos -->
+
+
+            </div>
+
+        </div>
+
+
+        
+
+
+    
+
+    <!-- Modal Contacto! -->
+    <div class="modal" id="contactoModal" tabindex="-1" role="dialog" aria-labelledby="contactoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactoModalLabel">Contacta con nosotros!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="mailto:sanchezquesadaalejandro@gmail.com" method="post" enctype="text/plain">
+                        Nombre:<br>
+                        <input type="text" name="name"><br>
+                        E-mail:<br>
+                        <input type="text" name="mail"><br>
+                        Comentario:<br>
+                        <input type="text" name="comment" size="50"><br><br>
+                        <input type="reset" class="btn btn-primary" data-dismiss="modal" />
+                        <input type="submit" class="btn btn-secondary" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Crear Producto -->
+    
+    <div class="modal" id="crearProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        {{obtenerCategorias()}} <!-- Llamo a categorias para poder mostrarlas en el formulario -->
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearProductoLabel">Crear Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Nombre</label>
+                            <input type="text" class="form-control" v-model="nombreProducto"
+                                placeholder="Coca Cola Zero...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Precio</label>
+                            <input type="number" placeholder="0.00" min="0" value="0" step="0.01" class="form-control"
+                            v-model="precioProducto">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Foto</label>
+                            <input type="text" class="form-control" v-model="fotoProducto"
+                                placeholder="http://www.rutafoto.com/foto.png">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Categoria</label>
+                            <select class="custom-select" v-model="categoriaProducto">
+                                <option v-for="categoria in categorias" :value="categoria.id">{{categoria.nombre}}</option>
+                            </select>
+                        </div>
+                        
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="crearProducto">Crear</button>
+                </div>
+            </div>
+        </div>
+   
+    </div>
+
+
+    
+
+
+
+    <!-- Modal Crear Usuario -->
+    <div class="modal" id="crearUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearUsuarioLabel">Crear Usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Nombre</label>
+                            <input type="text" class="form-control" v-model="nombreUsuario"
+                                placeholder="Pedro Martinez">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Email</label>
+                            <input type="email" class="form-control" v-model="emailUsuario"
+                                placeholder="Ejemplo@iesdosmares.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Avatar</label>
+                            <input type="text" class="form-control" v-model="avatarUsuario"
+                                placeholder="http://rutafoto.jpg">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Contraseña</label>
+                            <input type="password" class="form-control" v-model="contrasenyaUsuario"
+                                placeholder="clavesegura123">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Confirmar Contraseña</label>
+                            <input type="password" class="form-control" v-model="confirmcontrasenyaUsuario"
+                                placeholder="clavesegura123">
+                        </div>
+
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="empleado" name="empleado" value=0 class="custom-control-input"
+                                v-model="jefe">
+                            <label class="custom-control-label" for="empleado">Empleado</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="jefe" name="jefe" value=1 class="custom-control-input" v-model="jefe">
+                            <label class="custom-control-label" for="jefe">Jefe</label>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="crearUsuario">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Crear Puesto -->
+    <div class="modal" id="crearPuesto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearPuestoLabel">Crear Puesto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Nombre Puesto</label>
+                            <input type="text" class="form-control" v-model="puestoNombre"
+                                placeholder="Mesa 6 o Recepción 3 o Terraza 4">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" v-on:click="crearPuesto">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Crear Categoria -->
+    <div class="modal" id="crearCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearCategoriaLabel">Crear Categoria</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Crear</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
 
+    <div class="mostrarOpcionesTablas mostrarGrafico">
+        <div class="row">
+            <div class="col-12">
+                <canvas id="oilChart" width="200px" height="100px"></canvas>
+            </div>
+        </div>
+    </div>
 
 
+    </div> <!-- Fin app Vue -->
+   
+    <!-- Footer -->
+    <div class="row footer">
 
+        <div class="col-4">FreedomTPV</div>
+        <div class="col-4">Panel de Control</div>
+        <div class="col-4">Alejandro Sánchez Quesada</div>
+
+    </div>
 
     <!-- Vue y Axios -->
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
@@ -50,6 +559,12 @@
     <!-- Print JS Libreria -->
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+
+    <!-- ChartJS -->
+    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+
+
+
 </body>
 
 </html>

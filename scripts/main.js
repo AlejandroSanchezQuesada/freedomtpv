@@ -59,6 +59,7 @@ var aplicacion = new Vue({
                 })
         },
         crearPedido() {
+            console.log(this.puestoElegido.id)
             axios.post(localStorage.getItem('URL_API') + 'pedidos',
                 /* Aqui va el contenido a enviar en el POST */
                 {
@@ -77,6 +78,7 @@ var aplicacion = new Vue({
                 })
         },
         anyadirProductosAlPedido(producto, cantidad) {
+            
             axios.post(localStorage.getItem('URL_API') + 'productosdepedidos',
                 /* Aqui va el contenido a enviar en el POST */
                 {
@@ -171,15 +173,9 @@ var aplicacion = new Vue({
                 this.ingresoCliente = 0
                 this.actualizaDOM()
 
-                
-
             } else {
                 alert(respuesta)
             }
-
-
-
-
         },
 
         sumaCliente(cantidad) {
@@ -188,12 +184,12 @@ var aplicacion = new Vue({
         escogerPuesto(puesto) {
             this.puestoElegido = puesto
         },
-
-
-
-
         goToPanelControl() {
             window.location.href = '/pages/dashboard.html'
+        },
+        cerrarSesion(){
+            localStorage.removeItem("access_token");
+            window.location.href = '/pages/login.html'
         },
 
         actualizaDOM() {
