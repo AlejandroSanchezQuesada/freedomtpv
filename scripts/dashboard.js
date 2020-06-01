@@ -20,7 +20,13 @@ var aplicacion = new Vue({
         contrasenyaUsuario:"",
         confirmcontrasenyaUsuario:"",
         emailUsuario:"",
-        puestoNombre:""
+        puestoNombre:"",
+        nombreCategoria:"",
+        filtro:"",
+        idUsuario:"",
+        idProducto:"",
+        idCategoria:"",
+        idPuesto:""
 
     },
     async mounted() {
@@ -159,6 +165,169 @@ var aplicacion = new Vue({
                     console.log(response)
                 })
         },
+        crearCategoria(){
+            axios.post(localStorage.getItem('URL_API') + 'categorias',
+                /* Aqui va el contenido a enviar en el POST */
+                {
+                    "nombre": this.nombreCategoria,
+                },
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(() => {
+                    console.log(response)
+                })
+        },
+        obtenerUsuario(idUsuario) {
+            this.idUsuario = idUsuario;
+            axios.get(localStorage.getItem('URL_API') + 'users/'+idUsuario,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => (
+                    this.emailUsuario = response.data.data.email,
+                    this.nombreUsuario = response.data.data.name,
+                    this.jefe = response.data.data.jefe,
+                    this.avatarUsuario = response.data.data.avatar
+                    ))
+                
+        },
+        editarUsuario(){
+            axios.put(localStorage.getItem('URL_API') + 'users/'+this.idUsuario,
+                /* Aqui va el contenido a enviar en el POST */
+                {
+                    "name": this.nombreUsuario,
+                    "email":this.emailUsuario,
+                    "jefe":  this.jefe,
+                    "avatar":this.avatarUsuario,
+                    "password":this.contrasenyaUsuario,                    
+                },
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(() => {
+                    console.log(response)
+                })
+        },
+        eliminarUsuario(idUsuario) {
+            if (confirm("Estas seguro que deseas eliminar el usuario?")) {
+                axios.delete(localStorage.getItem('URL_API') + 'users/'+idUsuario,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => (
+                    console.log(response)
+                    ))
+            }
+           
+        },
+        obtenerProducto(idProducto) {
+            this.idProducto = idProducto;
+            axios.get(localStorage.getItem('URL_API') + 'productos/'+idProducto,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => (
+                    console.log(response),
+                    this.nombreProducto = response.data.data.nombre,
+                    this.precioProducto = response.data.data.precio,
+                    this.fotoProducto = response.data.data.foto
+                    ))
+                
+        },
+        editarProducto(){
+            axios.put(localStorage.getItem('URL_API') + 'productos/'+this.idProducto,
+                /* Aqui va el contenido a enviar en el POST */
+                {
+                    "nombre": this.nombreProducto,
+                    "precio":this.precioProducto,
+                    "foto":  this.fotoProducto,
+                    "categoria":this.categoriaProducto,               
+                },
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(() => {
+                    console.log(response)
+                })
+        },
+
+        eliminarProducto(idProducto) {
+            if (confirm("Estas seguro que deseas eliminar el producto?")) {
+                axios.delete(localStorage.getItem('URL_API') + 'productos/'+idProducto,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => (
+                    console.log(response)
+                    ))
+            }
+           
+        },
+        obtenerCategoria(idCategoria) {
+            this.idCategoria = idCategoria;
+            axios.get(localStorage.getItem('URL_API') + 'categorias/'+idCategoria,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => (
+                    console.log(response),
+                    this.nombreCategoria = response.data.data.nombre
+                    ))
+                
+        },
+        editarCategoria(){
+            axios.put(localStorage.getItem('URL_API') + 'categorias/'+this.idCategoria,
+                /* Aqui va el contenido a enviar en el POST */
+                {
+                    "nombre": this.nombreCategoria,           
+                },
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(() => {
+                    console.log(response)
+                })
+        },
+
+        eliminarCategoria(idCategoria) {
+            if (confirm("Estas seguro que deseas eliminar la categoria?")) {
+                axios.delete(localStorage.getItem('URL_API') + 'categorias/'+idCategoria,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => (
+                    console.log(response)
+                    ))
+            }
+           
+        },
+        obtenerPuesto(idPuesto) {
+            this.idPuesto = idPuesto;
+            axios.get(localStorage.getItem('URL_API') + 'puestos/'+idPuesto,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => (
+                    this.puestoNombre = response.data.data.nombre
+                    ))
+        },
+        editarPuesto(){
+            axios.put(localStorage.getItem('URL_API') + 'puestos/'+this.idPuesto,
+                /* Aqui va el contenido a enviar en el POST */
+                {
+                    "nombre": this.puestoNombre,           
+                },
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(() => {
+                    console.log(response)
+                })
+        },
+        eliminarPuesto(idPuesto) {
+            if (confirm("Estas seguro que deseas eliminar el puesto?")) {
+                axios.delete(localStorage.getItem('URL_API') + 'puestos/'+idPuesto,
+                { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
+                .then(response => (
+                    console.log(response)
+                    ))
+            }
+           
+        },
+
+
 
         /* Metodos para dar funcionalidad */
 
@@ -212,7 +381,7 @@ var aplicacion = new Vue({
 
         cerrarSesion(){
             localStorage.removeItem("access_token");
-            window.location.href = '/pages/login.html'
+            window.location.href = '../index.html';
         },
 
 
@@ -282,6 +451,25 @@ var aplicacion = new Vue({
                 data: oilData
             });
         },
+        filtroTabla() {
+            var value = this.filtro;
+			$('table tr:not(:first-child)').each(function () {
+				var found = 'false';
+				var valor = value.toLowerCase();
+				$(this).each(function () {
+					if ($(this).text().toLowerCase().indexOf(valor) >= 0) {
+						found = 'true';
+					}
+				});
+				if (found == 'true') {
+					$(this).show();
+				}
+				else {
+					$(this).hide();
+				}
+            });
+            this.filtro=""
+		}
 
 
 

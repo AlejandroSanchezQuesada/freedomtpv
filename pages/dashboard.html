@@ -32,7 +32,6 @@
 
 <body>
     <div class="container-fluid" id="app">
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!-- Logo y titulo de la barra de navegacion -->
             <a class="navbar-brand" href="./main.html">FreedomTPV <img src="../styles/images/logo/leaf.png" alt="logo"
@@ -108,7 +107,7 @@
 
         <div class="mostrarTablas mostrarOpcionesTablas">
             <div class="row">
-                <div class="col-9">
+                <div class="col-12">
                     <button class="btn btn-success" v-on:click="mostrarProductos">Productos</button>
                     <button class="btn btn-success" v-on:click="mostrarCategorias">Categorias</button>
                     <button class="btn btn-success" v-on:click="mostrarPuestos">Puestos</button>
@@ -116,8 +115,11 @@
                     <button class="btn btn-success" v-on:click="mostrarProductosDePedidos">ProductosDePedidos</button>
                     <button class="btn btn-success" v-on:click="mostrarUsuarios">Usuarios</button>
                 </div>
-                <div class="col-3">
-                    <input class="form-control" type="text" placeholder="Buscar... ">
+                <!-- <div id="filtroDatos" class="col-3">
+                    
+                    <input type="text" class="form-control" name="filtro" id="filtro" placeholder="Filtrar datos.."
+                       v-model="filtro" @change="filtroTabla">
+                    <br> -->
                 </div>
 
 
@@ -136,10 +138,13 @@
                         <div v-if="usuarioLogeado.jefe == 1">
                             <button class="btn btn-success" data-toggle="modal" data-target="#crearUsuario">Crear <i
                                     class="fas fa-plus-circle"></i></button>
-                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                                    <button type="button" class="btn btn-primary"
+                                    onclick="printJS({ printable: 'imprimirUsuarios', type: 'html' })">
+                                    Imprimir <i class="fas fa-print"></i>
+                                </button>
                         </div>
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="imprimirUsuarios">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -157,10 +162,15 @@
                                 <td>{{ usuario.email }}</td>
                                 <td>{{ usuario.name }}</td>
                                 <td>{{ usuario.jefe }}</td>
-                                <td v-if="usuarioLogeado.jefe == 1"><button class="btn btn-success"><i
-                                            class="fas fa-edit"></i></button></td>
-                                <td v-if="usuarioLogeado.jefe == 1"><button class="btn btn-success"><i
-                                            class="fas fa-trash-alt"></i></button></td>
+                                <td v-if="usuarioLogeado.jefe == 1">
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#editarUsuarioModal" v-on:click="obtenerUsuario(usuario.id)"><i
+                                            class="fas fa-edit" ></i></button>
+                                </td>
+                                <td v-if="usuarioLogeado.jefe == 1">
+                                    <button class="btn btn-success"  v-on:click="eliminarUsuario(usuario.id)"><i
+                                            class="fas fa-trash-alt"></i>
+                                    </button>
+                            </td>
                             </tr>
 
                         </tbody>
@@ -175,13 +185,16 @@
                         <div v-if="usuarioLogeado.jefe == 1">
                             <button class="btn btn-success" data-toggle="modal" data-target="#crearProducto">Crear <i
                                     class="fas fa-plus-circle"></i></button>
-                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                                    <button type="button" class="btn btn-primary"
+                                    onclick="printJS({ printable: 'imprimirProductos', type: 'html' })">
+                                    Imprimir <i class="fas fa-print"></i>
+                                </button>
                         </div>
                     </div>
 
 
 
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="imprimirProductos">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -189,6 +202,9 @@
                                 <th>Categoria</th>
                                 <th>Precio</th>
                                 <th>Foto</th>
+                                <!-- Comprobar si es jefe! -->
+                                <th v-if="usuarioLogeado.jefe == 1">Editar</th>
+                                <th v-if="usuarioLogeado.jefe == 1">Eliminar</th>
 
                             </tr>
                         </thead>
@@ -199,6 +215,14 @@
                                 <td>{{ producto.categoria.nombre }}</td>
                                 <td>{{ producto.precio }}</td>
                                 <td>{{ producto.foto }}</td>
+                                <td v-if="usuarioLogeado.jefe == 1">
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#editarProductoModal" v-on:click="obtenerProducto(producto.id)"><i
+                                            class="fas fa-edit" ></i></button>
+                                </td>
+                                <td v-if="usuarioLogeado.jefe == 1">
+                                    <button class="btn btn-success"  v-on:click="eliminarProducto(producto.id)"><i
+                                            class="fas fa-trash-alt"></i>
+                                    </button></td>
                             </tr>
 
                         </tbody>
@@ -212,20 +236,34 @@
                         <div v-if="usuarioLogeado.jefe == 1">
                             <button class="btn btn-success" data-toggle="modal" data-target="#crearCategoria">Crear <i
                                     class="fas fa-plus-circle"></i></button>
-                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                                    <button type="button" class="btn btn-primary"
+                                    onclick="printJS({ printable: 'imprimirCategorias', type: 'html' })">
+                                    Imprimir <i class="fas fa-print"></i>
+                                </button>
                         </div>
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="imprimirCategorias">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
+                                <!-- Comprobar si es jefe! -->
+                                <th v-if="usuarioLogeado.jefe == 1">Editar</th>
+                                <th v-if="usuarioLogeado.jefe == 1">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="categoria in categorias" :key="categoria.id">
                                 <td>{{ categoria.id }}</td>
                                 <td>{{ categoria.nombre }}</td>
+                                <td v-if="usuarioLogeado.jefe == 1">
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#editarCategoria" v-on:click="obtenerCategoria(categoria.id)"><i
+                                            class="fas fa-edit" ></i></button>
+                                </td>
+                                <td v-if="usuarioLogeado.jefe == 1">
+                                    <button class="btn btn-success"  v-on:click="eliminarProducto(producto.id)"><i
+                                            class="fas fa-trash-alt"></i>
+                                    </button></td>
                             </tr>
 
                         </tbody>
@@ -239,20 +277,34 @@
                         <div v-if="usuarioLogeado.jefe == 1">
                             <button class="btn btn-success" data-toggle="modal" data-target="#crearPuesto">Crear <i
                                     class="fas fa-plus-circle"></i></button>
-                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                                    <button type="button" class="btn btn-primary"
+                                    onclick="printJS({ printable: 'imprimirPuestos', type: 'html' })">
+                                    Imprimir <i class="fas fa-print"></i>
+                                </button>
                         </div>
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="imprimirPuestos">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
+                                <!-- Comprobar si es jefe! -->
+                                <th v-if="usuarioLogeado.jefe == 1">Editar</th>
+                                <th v-if="usuarioLogeado.jefe == 1">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="puesto,index in puestos" :key="index">
                                 <td>{{ puesto.id }}</td>
                                 <td>{{ puesto.nombre }}</td>
+                                <td v-if="usuarioLogeado.jefe == 1">
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#editarPuesto" v-on:click="obtenerPuesto(puesto.id)"><i
+                                            class="fas fa-edit" ></i></button>
+                                </td>
+                                <td v-if="usuarioLogeado.jefe == 1">
+                                    <button class="btn btn-success"  v-on:click="eliminarPuesto(puesto.id)"><i
+                                            class="fas fa-trash-alt"></i>
+                                    </button></td>
                             </tr>
 
                         </tbody>
@@ -264,10 +316,13 @@
                     <div class="col-12">
                         <!-- Comprobar si es jefe! -->
                         <div v-if="usuarioLogeado.jefe == 1">
-                            <button class="btn btn-success">Imprimir <i class="fas fa-print"></i></button>
+                            <button type="button" class="btn btn-primary"
+                                    onclick="printJS({ printable: 'imprimirPedidos', type: 'html' })">
+                                    Imprimir <i class="fas fa-print"></i>
+                                </button>
                         </div>
                     </div>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="imprimirPedidos">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -275,6 +330,7 @@
                                 <th>Puesto</th>
                                 <th>Fecha Pedido</th>
                                 <th>Ingreso</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -292,7 +348,14 @@
 
                 <!-- DivProductosDePedidos -->
                 <div class="col-12 divProductosDePedidos divTablas cscroll">
-                    <table class="table table-striped">
+                     <!-- Comprobar si es jefe! -->
+                     <div v-if="usuarioLogeado.jefe == 1">
+                        <button type="button" class="btn btn-primary"
+                                onclick="printJS({ printable: 'imprimirProductosPedidos', type: 'html' })">
+                                Imprimir <i class="fas fa-print"></i>
+                            </button>
+                    </div>
+                    <table class="table table-striped" id="imprimirProductosPedidos">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -319,7 +382,7 @@
 
             </div>
 
-        </div>
+        
 
 
         
@@ -346,7 +409,7 @@
                         <input type="text" name="mail"><br>
                         Comentario:<br>
                         <input type="text" name="comment" size="50"><br><br>
-                        <input type="reset" class="btn btn-primary" data-dismiss="modal" />
+                        <input type="reset" class="btn btn-primary" data-dismiss="modal" value="Cerrar"/>
                         <input type="submit" class="btn btn-secondary" />
                     </form>
                 </div>
@@ -520,16 +583,193 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <form>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Nombre Categoria</label>
+                            <input type="text" class="form-control" v-model="nombreCategoria"
+                                placeholder="Bebidas, Herramientas, Servicio Tecnico">
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Crear</button>
+                    <button type="button" class="btn btn-primary" v-on:click="crearCategoria">Crear</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal Editar Usuario -->
+<div class="modal" id="editarUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="editarUsuarioModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarUsuarioModal">Editar Usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Nombre</label>
+                    <input type="text" class="form-control" v-model="nombreUsuario"
+                        placeholder="Pedro Martinez">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Email</label>
+                    <input type="email" class="form-control" v-model="emailUsuario"
+                        placeholder="Ejemplo@iesdosmares.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Avatar</label>
+                    <input type="text" class="form-control" v-model="avatarUsuario"
+                        placeholder="http://rutafoto.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Contraseña</label>
+                    <input type="password" class="form-control" v-model="contrasenyaUsuario"
+                        placeholder="clavesegura123">
+                </div>
+
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" v-model="confirmcontrasenyaUsuario"
+                        placeholder="clavesegura123">
+                </div>
+
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="empleado" name="empleado" value=0 class="custom-control-input"
+                        v-model="jefe">
+                    <label class="custom-control-label" for="empleado">Empleado</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="jefe" name="jefe" value=1 class="custom-control-input" v-model="jefe">
+                    <label class="custom-control-label" for="jefe">Jefe</label>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" v-on:click="editarUsuario()">Editar Usuario</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal Editar Producto -->
+    
+  <div class="modal" id="editarProductoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  {{obtenerCategorias()}} <!-- Llamo a categorias para poder mostrarlas en el formulario -->
+
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="editarProductoLabel">Editar Producto</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+
+              <form>
+                  <div class="form-group">
+                      <label for="formGroupExampleInput">Nombre</label>
+                      <input type="text" class="form-control" v-model="nombreProducto"
+                          placeholder="Coca Cola Zero...">
+                  </div>
+
+                  <div class="form-group">
+                      <label for="formGroupExampleInput">Precio</label>
+                      <input type="number" placeholder="0.00" min="0" value="0" step="0.01" class="form-control"
+                      v-model="precioProducto">
+                  </div>
+
+                  <div class="form-group">
+                      <label for="formGroupExampleInput">Foto</label>
+                      <input type="text" class="form-control" v-model="fotoProducto"
+                          placeholder="http://www.rutafoto.com/foto.png">
+                  </div>
+                  <div class="form-group">
+                      <label for="formGroupExampleInput">Categoria</label>
+                      <select class="custom-select" v-model="categoriaProducto">
+                          <option v-for="categoria in categorias" :value="categoria.id">{{categoria.nombre}}</option>
+                      </select>
+                  </div>
+                  
+              </form>
+
+
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary" v-on:click="editarProducto">Editar</button>
+          </div>
+      </div>
+  </div>
+
+</div>
+
+<!-- Modal Editar Categoria -->
+<div class="modal" id="editarCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editarCategoriaLabel">Editar Categoria</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Nombre Categoria</label>
+                    <input type="text" class="form-control" v-model="nombreCategoria"
+                        placeholder="Bebidas, Herramientas, Servicio Tecnico">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" v-on:click="editarCategoria">Editar</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal Editar Puesto -->
+<div class="modal" id="editarPuesto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editarPuestoLabel">Editar Puesto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Nombre Puesto</label>
+                    <input type="text" class="form-control" v-model="puestoNombre"
+                        placeholder="Recepción, Terraza, Mesa 45...">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" v-on:click="editarPuesto">Editar</button>
+        </div>
+    </div>
+</div>
+</div>
 
 
     <div class="mostrarOpcionesTablas mostrarGrafico">
@@ -542,7 +782,7 @@
 
 
     </div> <!-- Fin app Vue -->
-   
+
     <!-- Footer -->
     <div class="row footer">
 

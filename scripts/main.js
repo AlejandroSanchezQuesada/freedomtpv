@@ -189,7 +189,7 @@ var aplicacion = new Vue({
         },
         cerrarSesion(){
             localStorage.removeItem("access_token");
-            window.location.href = '/pages/login.html'
+            window.location.href = '../index.html'
         },
 
         actualizaDOM() {

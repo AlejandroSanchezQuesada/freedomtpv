@@ -14,8 +14,7 @@
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a4fd43b371.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="styles/stylesheets/index.css">
+    <link rel="stylesheet" href="./styles/stylesheets/login.css">
 
 
 </head>
@@ -24,60 +23,96 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6">
-                <h1>FreedomTPV</h1>
+            <div class="col-12" id="app">
+                <br>
+                <div class="col-12 login_registro" v-if="login_registro">
+                    <h2>Login <i class="fas fa-sign-in-alt"></i></h2>
+                    <p>Por favor pon email y contraseña para iniciar sesión!</p>
 
-                <p>FreedomTPV es una aplicación web que consiste en la Administración de
-                    productos,categorías,
-                    usuarios y pedidos. El enfoque de la aplicación es un enfoque genérico lo cual te permite adaptarlo
-                    a cualquier
-                    tipo de negocio. Puede ser un taller de coches o un restaurante.</p>
-                <p>
-                    Las tecnologías que se han utilizado para la aplicación son:
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-at"></i></span>
+                        </div>
+                        <input type="email" class="form-control" v-model="email">
+                    </div>
 
-                <ul>
-                    <li>Backend: Laravel</li>
-                    <li>Frontend: VueJS, Librerias Jquery, Bootstrap</li>
-                    <li>Herramientas para el desarrollo: Postman, VSCode</li>
-                </ul>
-                </p>
-                <p>
-                    FreedomTPV es una aplicación completamente gratuita. Esto es un despliegue para comprobar el
-                    funcionamiento de la aplicación,
-                    Puedes descargar tanto la parte visual, como si quieres hacer la tuya utilizando únicamente la API.
-                </p>
-                <p> Aconsejo si vas a utilizar este programa a nivel profesional, cambiar este texto adaptado para la
-                    empresa</p>
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input type="password" class="form-control" v-model="password">
+                    </div>
+                    <br>
+                    <button class="btn btn-success" @click="logear()">Entrar</button>
+                    <button class="btn btn-success" @click="crearCuenta()">Crear Cuenta</button>
 
+                </div>
+                <div class="col-12 login_registro" v-else>
+                    <h2>Registro <i class="fas fa-user-plus"></i></h2>
+                    <p>Por favor rellene los campos de registro</p>
 
-                <p>Desarrollado por: Alejandro Sánchez Quesada</p>
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-lg"><i class="far fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" v-model="name" placeholder="Pepe Perez">
+                    </div>
 
-                <a href="https://github.com/AlejandroSanchezQuesada/tpv"><i class="fab fa-github">API</i></a>
-                <a href="https://github.com/AlejandroSanchezQuesada/FreedomTPV"><i class="fab fa-github">Visual</i></a>
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-at"></i></span>
+                        </div>
+                        <input type="email" class="form-control" v-model="email" placeholder="pepe@tpv.com">
+                    </div>
 
-                </p>
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input type="password" class="form-control" v-model="password" placeholder="micontraseña123">
+                    </div>
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-lg"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input type="password" class="form-control" v-model="password_confirmation"
+                            placeholder="micontraseña123">
+                    </div>
+
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="empleado" name="empleado" value=0 class="custom-control-input"
+                            v-model="jefe">
+                        <label class="custom-control-label" for="empleado">Empleado</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="jefe" name="jefe" value=1 class="custom-control-input" v-model="jefe">
+                        <label class="custom-control-label" for="jefe">Jefe</label>
+                    </div>
+
+                    <br>
+                    <button class="btn btn-success" @click="registrarse()">Registrar</button>
+                    <button class="btn btn-success" @click="volverLogin()">Iniciar sesión con cuenta existente</button>
+                </div>
             </div>
 
-            <a href="pages/login.html">Al Login</a>
-
-            <div class="col-6" id="app">
-
-            </div>
         </div>
 
-    </div>
+        <!-- Footer -->
+        <div class="row footer">
 
-    <!-- Footer -->
-    <div class="row footer">
-        <div class="col-6">FreedomTPV</div>
-        <div class="col-6">Alejandro Sánchez Quesada</div>
-    </div>
+            <div class="col-4">FreedomTPV</div>
+            <div class="col-4">Login</div>
+            <div class="col-4">Alejandro Sánchez Quesada</div>
 
+        </div>
+        <!-- Vue y Axios -->
+        <script src="https://unpkg.com/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <!-- Importando URL de la API -->
+        <script src="./config/api.js"></script>
+        <!-- Codigo JS/VUE de Login -->
+        <script src="./scripts/login.js"></script>
 
-    <!-- Vue y Axios -->
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="config/api.js"></script>
 
 </body>
 
