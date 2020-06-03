@@ -1,6 +1,6 @@
 
 /* Configuración URL API */
-localStorage.setItem('URL_API','http://tpv.test/api/')
+localStorage.setItem('URL_API','https://api-freedomtpv.herokuapp.com/api/')
 
 
 
