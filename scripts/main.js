@@ -74,7 +74,7 @@ var aplicacion = new Vue({
                     console.log(response)
                 })
                 .catch(() => {
-                    console.log(response)
+                    alert("Ha ocurrido un error al crear el pedido")
                 })
         },
         anyadirProductosAlPedido(producto, cantidad) {
@@ -91,7 +91,7 @@ var aplicacion = new Vue({
                     console.log(response)
                 })
                 .catch(() => {
-                    console.log(response)
+                    alert("Ha ocurrido un error al añadir el producto al pedido")
                 })
         },
         cancelarPedido() {
@@ -135,22 +135,19 @@ var aplicacion = new Vue({
             
         },
         creandoPedido() {
+           
             var respuesta = "Ha ocurrido un error, ";
             var correcto = true;
-
-            if (this.puestoElegido == null) {
+         
+            if (this.puestoElegido.length == 0) {
                 respuesta += "No has elegido puesto, "
                 correcto = false;
-
             }
-
             if (correcto == true) {
-
                 this.crearPedido()
-
-
             } else {
                 alert(respuesta)
+                $("#modalCobrar").modal('toggle');
             }
         },
 

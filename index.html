@@ -12,6 +12,18 @@
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a4fd43b371.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/stylesheets/login.css">
@@ -20,14 +32,18 @@
 </head>
 
 <body>
-
+    <h1 class="letrasLogo"> <span class="logopers">Free</span>domTPV  <img src="./styles/images/logo/leaf.png" alt="freedomtpvlogo" class="logoImg"></h1>
     <div class="container-fluid">
         <div class="row ">
             <div class="col-12" id="app">
+                <div class="col-12">
+                    
+                </div>
                 <br>
                 <div class="col-6 login_registro " v-if="login_registro">
                     <h2>Login <i class="fas fa-sign-in-alt"></i></h2>
                     <p>Por favor pon email y contraseña para iniciar sesión!</p>
+
 
                     <div class="input-group input-group-lg">
                         <div class="input-group-prepend">
@@ -44,12 +60,16 @@
                     </div>
                     <br>
                     <button class="btn btn-success" @click="logear()">Entrar</button>
-                    <button class="btn btn-success" @click="crearCuenta()">Crear Cuenta</button>
+                    <button class="btn btn-success btn-crearCuenta" @click="crearCuenta()">Crear Cuenta</button>
 
                 </div>
                 <div class="col-6 login_registro" v-else>
                     <h2>Registro <i class="fas fa-user-plus"></i></h2>
                     <p>Por favor rellene los campos de registro</p>
+
+                    <div class="alert alert-success" id="registroExito" role="alert">
+                        <strong>Registro completado!</strong>
+                    </div>
 
                     <div class="input-group input-group-lg">
                         <div class="input-group-prepend">
@@ -90,11 +110,25 @@
                     </div>
 
                     <br>
-                    <button class="btn btn-success" @click="registrarse()">Registrar</button>
+                    <button class="btn btn-success btn-crearCuenta" @click="registrarse()">Registrar</button>
                     <button class="btn btn-success" @click="volverLogin()">Iniciar sesión con cuenta existente</button>
                 </div>
+                <div class="alert alert-warning alert-dismissible fade show col-7" id="loginErroneo" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    <strong>Ha ocurrido un error!</strong> Credenciales incorrectos.
+                </div>
+                <div class="alert alert-warning alert-dismissible fade show col-7" id="registrarErroneo" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    <strong>Ha ocurrido un error!</strong> Los datos enviados son incorrectos, por favor comprueba de nuevo.
+                </div>
+
             </div>
 
+        </div>
         </div>
 
         <!-- Footer -->

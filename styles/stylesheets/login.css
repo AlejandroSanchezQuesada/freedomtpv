@@ -4,7 +4,7 @@
     font-family: 'Lato', sans-serif;
 }
 
-body{
+body {
     background-image: url("../images/login/restaurante.jpg");
 }
 
@@ -13,6 +13,7 @@ body{
     padding-bottom: 2%;
 
     background-color: #e8ebe9;
+
 
 }
 
@@ -39,3 +40,47 @@ div {
     color: black;
     text-align: center;
 }
+
+#loginErroneo {
+    display: none;
+}
+
+#registrarErroneo {
+    display: none;
+}
+
+#registroExito {
+    display: none;
+}
+
+.letrasLogo {
+    background-color: #005F9F;
+    color: white;
+    text-align: center;
+    font-size: 2em;
+}
+
+.logoImg {
+    width: 2em;
+    height: 2em;
+}
+
+.logopers {
+    color: #80FF00;
+}
+
+.btn-success:hover {
+    border: solid 2px #EB5717 ;
+}
+
+.btn-crearCuenta {
+    background-color: #EB5717 !important;
+    color: white !important;
+}
+
+.btn-crearCuenta:hover {
+    background-color: #EB5717 !important;
+    color: white !important;
+    border: solid 2px #005F9F ;
+}
+

@@ -21,12 +21,16 @@ var aplicacion = new Vue({
                     console.log(response)
                     if (response.data.access_token) {
                         localStorage.setItem("access_token", response.data.access_token);
+                        window.location.href = '/pages/main.html'
                     }
-                    window.location.href = '/pages/main.html'
+
+                    if (response.data.message == "Invalid credentials" || response.data.message == "The given data was invalid.") {
+                        $("#loginErroneo").show();
+                    }
+                    
                 })
                 .catch(error => {
                     console.log(error.response)
-
                 });
         },
         registrarse() {
@@ -40,12 +44,11 @@ var aplicacion = new Vue({
                 avatar:this.avatar
             })
                 .then(response => {
-                    console.log("registrado!")
+                    $("#registroExito").show();
                     window.location.href = ''
                 })
                 .catch(error => {
-                    console.log(error.response)
-
+                    $("#registrarErroneo").show();
                 });
         },
         /* Metodos Funcionalidad */

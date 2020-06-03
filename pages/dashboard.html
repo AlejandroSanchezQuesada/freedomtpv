@@ -34,7 +34,7 @@
     <div id="app">
         <nav class="navbar navbar-expand navbar-light bg-light customNavbar">
             <!-- Logo y titulo de la barra de navegacion -->
-            <a class="navbar-brand customLetrasNavbar" href="./main.html">FreedomTPV <img src="../styles/images/logo/leaf.png" alt="logo"
+            <a class="navbar-brand customLetrasNavbar" href="./main.html"> <span class="logopers">Free</span>domTPV <img src="../styles/images/logo/leaf.png" alt="logo"
                     class="logoImage"></a>
             <!-- Opciones de la barr de navegacion -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -52,7 +52,8 @@
 
                 </ul>
                 <div class="row">
-                    <div class="dropdown">
+                    <div v-if="usuarioLogeado.length == 0" class="loader"></div>
+                    <div v-else class="dropdown">
                         <div class="col-12 dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"><img :src="usuarioLogeado.avatar"
                                 alt="FotoUsuario" class="img_avatar"></div>
@@ -157,24 +158,27 @@
                                 <th v-if="usuarioLogeado.jefe == 1">Eliminar</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <div v-if="usuarios.length == 0" class="loader"></div>
+                        <div v-else>
+                        <tbody >
                             <tr v-for="usuario in usuarios.data" :key="usuario.id">
                                 <td>{{ usuario.id }}</td>
                                 <td>{{ usuario.email }}</td>
                                 <td>{{ usuario.name }}</td>
                                 <td>{{ usuario.jefe }}</td>
                                 <td v-if="usuarioLogeado.jefe == 1">
-                                    <button class="btn btn-success" data-toggle="modal" data-target="#editarUsuarioModal" v-on:click="obtenerUsuario(usuario.id)"><i
+                                    <button class="btn btn-success btn-editar" data-toggle="modal" data-target="#editarUsuarioModal" v-on:click="obtenerUsuario(usuario.id)"><i
                                             class="fas fa-edit" ></i></button>
                                 </td>
                                 <td v-if="usuarioLogeado.jefe == 1">
-                                    <button class="btn btn-success"  v-on:click="eliminarUsuario(usuario.id)"><i
+                                    <button class="btn btn-success btn-eliminar"  v-on:click="eliminarUsuario(usuario.id)"><i
                                             class="fas fa-trash-alt"></i>
                                     </button>
                             </td>
                             </tr>
 
                         </tbody>
+                    </div>
                     </table>
                 </div> <!-- Fin divUsuarios -->
 
@@ -209,6 +213,8 @@
 
                             </tr>
                         </thead>
+                        <div v-if="productos.length == 0" class="loader"></div>
+                        <div v-else>
                         <tbody>
                             <tr v-for="producto,index in productos" :key="index">
                                 <td>{{ producto.id }}</td>
@@ -227,6 +233,7 @@
                             </tr>
 
                         </tbody>
+                    </div>
                     </table>
                 </div> <!-- Fin divProductos -->
 
@@ -253,6 +260,8 @@
                                 <th v-if="usuarioLogeado.jefe == 1">Eliminar</th>
                             </tr>
                         </thead>
+                        <div v-if="categorias.length == 0" class="loader"></div>
+                        <div v-else>
                         <tbody>
                             <tr v-for="categoria in categorias" :key="categoria.id">
                                 <td>{{ categoria.id }}</td>
@@ -268,6 +277,7 @@
                             </tr>
 
                         </tbody>
+                    </div>
                     </table>
                 </div> <!-- Fin DivCategorias -->
 
@@ -294,6 +304,8 @@
                                 <th v-if="usuarioLogeado.jefe == 1">Eliminar</th>
                             </tr>
                         </thead>
+                        <div v-if="puestos.length == 0" class="loader"></div>
+                        <div v-else>
                         <tbody>
                             <tr v-for="puesto,index in puestos" :key="index">
                                 <td>{{ puesto.id }}</td>
@@ -309,6 +321,7 @@
                             </tr>
 
                         </tbody>
+                    </div>
                     </table>
                 </div> <!-- Fin DivPuestos -->
 
@@ -334,6 +347,8 @@
                                 
                             </tr>
                         </thead>
+                        <div v-if="pedidos.length == 0" class="loader"></div>
+                        <div v-else>
                         <tbody>
                             <tr v-for="pedido in pedidos.data" :key="pedido.id">
                                 <td>{{ pedido.id }}</td>
@@ -344,6 +359,7 @@
                             </tr>
 
                         </tbody>
+                    </div>
                     </table>
                 </div> <!-- Fin DivPedidos -->
 
@@ -366,6 +382,8 @@
 
                             </tr>
                         </thead>
+                        <div v-if="productos_de_pedidos.length == 0" class="loader"></div>
+                        <div v-else>
                         <tbody>
                             <tr v-for="productodepedidoSingular in productos_de_pedidos.data"
                                 :key="productodepedidoSingular.id">
@@ -377,6 +395,7 @@
                             </tr>
 
                         </tbody>
+                    </div>
                     </table>
                 </div> <!-- Fin DivPedidos -->
 
@@ -410,8 +429,8 @@
                         <input type="text" name="mail"><br>
                         Comentario:<br>
                         <input type="text" name="comment" size="50"><br><br>
-                        <input type="reset" class="btn btn-primary" data-dismiss="modal" value="Cerrar"/>
-                        <input type="submit" class="btn btn-secondary" />
+                        <input type="reset" class="btn btn-primary btn-cerrar" data-dismiss="modal" value="Cerrar"/>
+                        <input type="submit" class="btn btn-secondary btn-enviar" />
                     </form>
                 </div>
                 <div class="modal-footer">

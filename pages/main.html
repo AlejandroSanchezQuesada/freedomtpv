@@ -36,7 +36,8 @@
 
             <div class="col-9 columnaIzquierda">
                 <div class="row">
-                    <div class="col-12">
+                    <div v-if="categorias.length == 0" class="loader"></div>
+                    <div v-else class="col-12">
                         <div class="row">
                         <button class="btn btn-success botonCategorias col" v-on:click="obtenerProductos()">General</button>
                         <button v-for="categoria in categorias" :key="categoria.id" type="button"
@@ -44,8 +45,8 @@
                             v-on:click="obtenerProductosPorCategoria(categoria.id)">{{ categoria.nombre }}</button>
                         </div>
                     </div>
-                    
-                    <div class="col-12">
+                    <div v-if="productos.length == 0" class="loader"></div>
+                    <div v-else class="col-12">
                         <button v-for="producto in productos" :key="producto.id" type="button"
                             class="btn btn-success botonproductos" v-on:click="anyadirProducto(producto)"><img
                                 :src=producto.foto :alt=producto.nombre class="imgProducto">
@@ -54,7 +55,8 @@
                                 
                         </button>
                     </div>
-                    <div class="col-12">
+                    <div v-if="puestos.length == 0" class="loader"></div>
+                    <div v-else class="col-12">
                         <div class="row">
                         <button v-for="puesto in puestos" :key="puesto.id" type="button" class="btn btn-success botonPuestos col"
                             v-on:click="escogerPuesto(puesto)">{{puesto.nombre}}
@@ -74,7 +76,8 @@
                                             v-on:click="goToPanelControl()">Panel de Control</button></div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div v-if="usuarios.length == 0" class="loader"></div>
+                            <div v-else class="col-4">
                                <!--  <img :src=usuarios.avatar :alt=usuarios.nombre> -->
                                <div class="dropdown">
                                 <div class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
@@ -96,7 +99,7 @@
 
                             <table class="table table-bordered table-striped">
                                 <div v-for="productosElegido,index in productosElegidos" :key="productosElegido.id">
-                                    <button class="btn botonProductoPedido col-12"
+                                    <button class="btn botonProductoPedido col-11"
                                         v-on:click="borrarProductoPedido(index)">{{ productosElegido.nombre }} <span
                                             :key="productosElegido.cantidad"
                                             class="badge badge-pill badge-primary">{{ productosElegido.cantidad }}</span>
