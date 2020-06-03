@@ -31,22 +31,22 @@
 </head>
 
 <body>
-    <div class="container-fluid" id="app">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div id="app">
+        <nav class="navbar navbar-expand navbar-light bg-light customNavbar">
             <!-- Logo y titulo de la barra de navegacion -->
-            <a class="navbar-brand" href="./main.html">FreedomTPV <img src="../styles/images/logo/leaf.png" alt="logo"
+            <a class="navbar-brand customLetrasNavbar" href="./main.html">FreedomTPV <img src="../styles/images/logo/leaf.png" alt="logo"
                     class="logoImage"></a>
             <!-- Opciones de la barr de navegacion -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto customLetrasNavbar">
                     <li class="nav-item active" id="navHome">
-                        <a class="nav-link" v-on:click="mostrarHome">Home</a>
+                        <a class="nav-link customLetrasNavbar" v-on:click="mostrarHome">Home</a>
                     </li>
                     <li class="nav-item" id="navTablas">
-                        <a class="nav-link" v-on:click="mostrarTablas">Tablas <i class="fas fa-table"></i></a>
+                        <a class="nav-link customLetrasNavbar" v-on:click="mostrarTablas">Tablas <i class="fas fa-table"></i></a>
                     </li>
                     <li class="nav-item" id="navGraficos">
-                        <a class="nav-link" v-on:click="mostrarGraficos">Mas vendidos <i
+                        <a class="nav-link customLetrasNavbar" v-on:click="mostrarGraficos">Mas vendidos <i
                                 class="fas fa-chart-pie"></i></a>
                     </li>
 
@@ -70,6 +70,8 @@
 
             </div>
         </nav>
+    <div class="container-fluid">
+        
 
         <div class="mostrarHome mostrarOpcionesTablas">
             <div class="row">
@@ -94,8 +96,7 @@
                     </article>
                 </div>
                 <div class="col-12">
-                    <button class="btn btn-success">Ayuda</button>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#contactoModal">Contacto</button>
+                    <button class="btn btn-primary btn-contacto" data-toggle="modal" data-target="#contactoModal">Contacto</button>
                 </div>
             </div>
 
@@ -108,12 +109,12 @@
         <div class="mostrarTablas mostrarOpcionesTablas">
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-success" v-on:click="mostrarProductos">Productos</button>
-                    <button class="btn btn-success" v-on:click="mostrarCategorias">Categorias</button>
-                    <button class="btn btn-success" v-on:click="mostrarPuestos">Puestos</button>
-                    <button class="btn btn-success" v-on:click="mostrarPedidos">Pedidos</button>
-                    <button class="btn btn-success" v-on:click="mostrarProductosDePedidos">ProductosDePedidos</button>
-                    <button class="btn btn-success" v-on:click="mostrarUsuarios">Usuarios</button>
+                    <button class="btn btn-success btn-categoriasTablas" v-on:click="mostrarProductos">Productos</button>
+                    <button class="btn btn-success btn-categoriasTablas" v-on:click="mostrarCategorias">Categorias</button>
+                    <button class="btn btn-success btn-categoriasTablas" v-on:click="mostrarPuestos">Puestos</button>
+                    <button class="btn btn-success btn-categoriasTablas" v-on:click="mostrarPedidos">Pedidos</button>
+                    <button class="btn btn-success btn-categoriasTablas" v-on:click="mostrarProductosDePedidos">ProductosDePedidos</button>
+                    <button class="btn btn-success btn-categoriasTablas" v-on:click="mostrarUsuarios">Usuarios</button>
                 </div>
                 <!-- <div id="filtroDatos" class="col-3">
                     
@@ -136,9 +137,9 @@
                     <div class="col-12">
                         <!-- Comprobar si es jefe! -->
                         <div v-if="usuarioLogeado.jefe == 1">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#crearUsuario">Crear <i
+                            <button class="btn btn-success btn-crear" data-toggle="modal" data-target="#crearUsuario">Crear <i
                                     class="fas fa-plus-circle"></i></button>
-                                    <button type="button" class="btn btn-primary"
+                                    <button type="button" class="btn btn-primary btn-imprimir"
                                     onclick="printJS({ printable: 'imprimirUsuarios', type: 'html' })">
                                     Imprimir <i class="fas fa-print"></i>
                                 </button>
@@ -183,9 +184,9 @@
                     <div class="col-12">
                         <!-- Comprobar si es jefe! -->
                         <div v-if="usuarioLogeado.jefe == 1">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#crearProducto">Crear <i
+                            <button class="btn btn-success btn-crear" data-toggle="modal" data-target="#crearProducto">Crear <i
                                     class="fas fa-plus-circle"></i></button>
-                                    <button type="button" class="btn btn-primary"
+                                    <button type="button" class="btn btn-primary btn-imprimir"
                                     onclick="printJS({ printable: 'imprimirProductos', type: 'html' })">
                                     Imprimir <i class="fas fa-print"></i>
                                 </button>
@@ -201,7 +202,7 @@
                                 <th>Nombre</th>
                                 <th>Categoria</th>
                                 <th>Precio</th>
-                                <th>Foto</th>
+                                <!-- <th>Foto</th> -->
                                 <!-- Comprobar si es jefe! -->
                                 <th v-if="usuarioLogeado.jefe == 1">Editar</th>
                                 <th v-if="usuarioLogeado.jefe == 1">Eliminar</th>
@@ -214,13 +215,13 @@
                                 <td>{{ producto.nombre }}</td>
                                 <td>{{ producto.categoria.nombre }}</td>
                                 <td>{{ producto.precio }}</td>
-                                <td>{{ producto.foto }}</td>
+                                <!-- <td>{{ producto.foto }}</td> -->
                                 <td v-if="usuarioLogeado.jefe == 1">
-                                    <button class="btn btn-success" data-toggle="modal" data-target="#editarProductoModal" v-on:click="obtenerProducto(producto.id)"><i
+                                    <button class="btn btn-success btn-editar" data-toggle="modal" data-target="#editarProductoModal" v-on:click="obtenerProducto(producto.id)"><i
                                             class="fas fa-edit" ></i></button>
                                 </td>
                                 <td v-if="usuarioLogeado.jefe == 1">
-                                    <button class="btn btn-success"  v-on:click="eliminarProducto(producto.id)"><i
+                                    <button class="btn btn-success btn-eliminar"  v-on:click="eliminarProducto(producto.id)"><i
                                             class="fas fa-trash-alt"></i>
                                     </button></td>
                             </tr>
@@ -234,9 +235,9 @@
                     <div class="col-12">
                         <!-- Comprobar si es jefe! -->
                         <div v-if="usuarioLogeado.jefe == 1">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#crearCategoria">Crear <i
+                            <button class="btn btn-success btn-crear" data-toggle="modal" data-target="#crearCategoria">Crear <i
                                     class="fas fa-plus-circle"></i></button>
-                                    <button type="button" class="btn btn-primary"
+                                    <button type="button" class="btn btn-primary btn-imprimir"
                                     onclick="printJS({ printable: 'imprimirCategorias', type: 'html' })">
                                     Imprimir <i class="fas fa-print"></i>
                                 </button>
@@ -257,11 +258,11 @@
                                 <td>{{ categoria.id }}</td>
                                 <td>{{ categoria.nombre }}</td>
                                 <td v-if="usuarioLogeado.jefe == 1">
-                                    <button class="btn btn-success" data-toggle="modal" data-target="#editarCategoria" v-on:click="obtenerCategoria(categoria.id)"><i
+                                    <button class="btn btn-success btn-editar" data-toggle="modal" data-target="#editarCategoria" v-on:click="obtenerCategoria(categoria.id)"><i
                                             class="fas fa-edit" ></i></button>
                                 </td>
                                 <td v-if="usuarioLogeado.jefe == 1">
-                                    <button class="btn btn-success"  v-on:click="eliminarProducto(producto.id)"><i
+                                    <button class="btn btn-success btn-eliminar"  v-on:click="eliminarProducto(producto.id)"><i
                                             class="fas fa-trash-alt"></i>
                                     </button></td>
                             </tr>
@@ -275,9 +276,9 @@
                     <div class="col-12">
                         <!-- Comprobar si es jefe! -->
                         <div v-if="usuarioLogeado.jefe == 1">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#crearPuesto">Crear <i
+                            <button class="btn btn-success btn-crear" data-toggle="modal" data-target="#crearPuesto">Crear <i
                                     class="fas fa-plus-circle"></i></button>
-                                    <button type="button" class="btn btn-primary"
+                                    <button type="button" class="btn btn-primary btn-imprimir"
                                     onclick="printJS({ printable: 'imprimirPuestos', type: 'html' })">
                                     Imprimir <i class="fas fa-print"></i>
                                 </button>
@@ -298,11 +299,11 @@
                                 <td>{{ puesto.id }}</td>
                                 <td>{{ puesto.nombre }}</td>
                                 <td v-if="usuarioLogeado.jefe == 1">
-                                    <button class="btn btn-success" data-toggle="modal" data-target="#editarPuesto" v-on:click="obtenerPuesto(puesto.id)"><i
+                                    <button class="btn btn-success btn-editar" data-toggle="modal" data-target="#editarPuesto" v-on:click="obtenerPuesto(puesto.id)"><i
                                             class="fas fa-edit" ></i></button>
                                 </td>
                                 <td v-if="usuarioLogeado.jefe == 1">
-                                    <button class="btn btn-success"  v-on:click="eliminarPuesto(puesto.id)"><i
+                                    <button class="btn btn-success btn-eliminar"  v-on:click="eliminarPuesto(puesto.id)"><i
                                             class="fas fa-trash-alt"></i>
                                     </button></td>
                             </tr>
@@ -316,7 +317,7 @@
                     <div class="col-12">
                         <!-- Comprobar si es jefe! -->
                         <div v-if="usuarioLogeado.jefe == 1">
-                            <button type="button" class="btn btn-primary"
+                            <button type="button" class="btn btn-primary btn-imprimir"
                                     onclick="printJS({ printable: 'imprimirPedidos', type: 'html' })">
                                     Imprimir <i class="fas fa-print"></i>
                                 </button>
@@ -350,7 +351,7 @@
                 <div class="col-12 divProductosDePedidos divTablas cscroll">
                      <!-- Comprobar si es jefe! -->
                      <div v-if="usuarioLogeado.jefe == 1">
-                        <button type="button" class="btn btn-primary"
+                        <button type="button" class="btn btn-primary btn-imprimir"
                                 onclick="printJS({ printable: 'imprimirProductosPedidos', type: 'html' })">
                                 Imprimir <i class="fas fa-print"></i>
                             </button>
@@ -426,7 +427,6 @@
     
     <div class="modal" id="crearProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        {{obtenerCategorias()}} <!-- Llamo a categorias para poder mostrarlas en el formulario -->
 
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -665,7 +665,7 @@
     
   <div class="modal" id="editarProductoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  {{obtenerCategorias()}} <!-- Llamo a categorias para poder mostrarlas en el formulario -->
+  
 
   <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -781,8 +781,8 @@ aria-hidden="true">
     </div>
 
 
-    </div> <!-- Fin app Vue -->
-
+    </div> 
+</div><!-- Fin app Vue -->
     <!-- Footer -->
     <div class="row footer">
 

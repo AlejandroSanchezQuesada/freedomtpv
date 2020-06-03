@@ -341,7 +341,7 @@ var aplicacion = new Vue({
         },
         mostrarProductos() {
             this.obtenerProductos()
-
+            this.obtenerCategorias()
             $(".divTablas").hide();
 
             $(".divProductos").show();
@@ -389,6 +389,7 @@ var aplicacion = new Vue({
 
         mostrarHome() {
             $(".mostrarOpcionesTablas").hide();
+            $(".divTablas").hide();
             $(".mostrarHome").show();
             $(".nav-item").removeClass('active');
             $("#navHome").addClass('active');
@@ -404,6 +405,7 @@ var aplicacion = new Vue({
         },
         mostrarGraficos() {
             $(".mostrarOpcionesTablas").hide();
+            $(".divTablas").hide();
             $(".mostrarGrafico").show();
             $(".nav-item").removeClass('active');
             $("#navGraficos").addClass('active');

@@ -1,15 +1,41 @@
-.login_registro{
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+body{
+    background-image: url("../images/login/restaurante.jpg");
+}
+
+.login_registro {
     border-radius: 10px;
-    background-color: white;
     padding-bottom: 2%;
+
+    background-color: #e8ebe9;
+
+}
+
+div {
+    display: inline-block;
+    text-align: center;
+}
+
+.radiocorregir {
+    text-align: left;
+}
+
+.btn-success {
+    background-color: #005F9F !important;
+
 }
 
 .footer {
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
-    background-color: red;
-    color: white;
+    width: 110%;
+    background-color: #e8ebe9;
+    color: black;
     text-align: center;
- }
+}

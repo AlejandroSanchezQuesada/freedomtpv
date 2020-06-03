@@ -21,11 +21,11 @@
 
 <body>
 
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row ">
             <div class="col-12" id="app">
                 <br>
-                <div class="col-12 login_registro" v-if="login_registro">
+                <div class="col-6 login_registro " v-if="login_registro">
                     <h2>Login <i class="fas fa-sign-in-alt"></i></h2>
                     <p>Por favor pon email y contraseña para iniciar sesión!</p>
 
@@ -47,7 +47,7 @@
                     <button class="btn btn-success" @click="crearCuenta()">Crear Cuenta</button>
 
                 </div>
-                <div class="col-12 login_registro" v-else>
+                <div class="col-6 login_registro" v-else>
                     <h2>Registro <i class="fas fa-user-plus"></i></h2>
                     <p>Por favor rellene los campos de registro</p>
 
@@ -79,12 +79,12 @@
                             placeholder="micontraseña123">
                     </div>
 
-                    <div class="custom-control custom-radio">
+                    <div class="custom-control custom-radio radiocorregir">
                         <input type="radio" id="empleado" name="empleado" value=0 class="custom-control-input"
                             v-model="jefe">
                         <label class="custom-control-label" for="empleado">Empleado</label>
                     </div>
-                    <div class="custom-control custom-radio">
+                    <div class="custom-control custom-radio radiocorregir">
                         <input type="radio" id="jefe" name="jefe" value=1 class="custom-control-input" v-model="jefe">
                         <label class="custom-control-label" for="jefe">Jefe</label>
                     </div>

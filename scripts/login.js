@@ -6,9 +6,8 @@ var aplicacion = new Vue({
         password_confirmation: "",
         jefe: 0,
         name: "",
-        avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Microsoft_Account.svg/1200px-Microsoft_Account.svg.png",
+        avatar: "../styles/images/users/perfil.png",
         login_registro: true
-
     },
     methods: {
         /* Metodos HTTP */

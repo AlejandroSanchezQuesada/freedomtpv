@@ -1,5 +1,7 @@
-*{
-    /* border: solid 1px black; */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+
+* {
+    font-family: 'Lato', sans-serif;
 }
 
 .img_avatar{
@@ -7,6 +9,13 @@
     height: 50px;
 }
 
+.btn {
+    border: solid 2px black;
+}
+
+.btn:hover {
+    border: solid 2px #EBBE17 !important;
+}
 
 .divTablas{
     display: none;
@@ -35,8 +44,75 @@
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
-    background-color: red;
-    color: white;
+    width: 110%;
+    background-color: #e8ebe9;
+    color: black;
     text-align: center;
- }
+}
+
+.customNavbar{
+    background-color: #005F9F !important;
+    color: white !important;
+}
+.customLetrasNavbar{
+    color: white !important;
+}
+
+body{
+    background-color: #E8EBE9;
+}
+
+nav{
+    width: 100%;
+}
+.active{
+    border-bottom: solid 2px white;
+}
+
+.btn-contacto{
+    background-color: #EBBE17 !important;
+    color: black !important;
+    }
+
+
+.btn-categoriasTablas{
+    background-color: #EB5717 !important;
+    color: white !important;
+}
+
+.btn-crear{
+    background-color: #80FF00 !important;
+    color: black !important;
+}
+
+.btn-crear:hover{
+    background-color: #80FF00 !important;
+    color: black !important;
+    border: solid 2px #005F9F !important;
+}
+
+.btn-imprimir{
+    background-color: #EBBE17 !important;
+    color: black !important;
+}
+
+.btn-imprimir:hover{
+    background-color: #EBBE17 !important;
+    color: black !important;
+    border: solid 2px #005F9F !important;
+}
+
+.btn-editar{
+    background-color: #4C4A48 !important;
+    color: white !important;
+}
+
+.btn-eliminar{
+    background-color: #FE0000 !important;
+    color: white !important;
+}
+
+canvas{
+    width: 100% !important;
+    height: 100% !important;
+}

@@ -1,26 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+
 * {
-    /* border: solid 1px red; */
+    font-family: 'Lato', sans-serif;
 }
 
-button {
-    margin: 1%;
+body{
+    background-color: #e8ebe9;
 }
+.container-fluid {
+    height: 100vh;
+    overflow: auto;
+}
+.columnaIzquierda{
+    background-color: #e8ebe9;
+
+}
+
+.columnaDerecha{
+
+    border-left: solid 2px #4C4A48;
+}
+.btn {
+    border: solid 2px black;
+}
+
+.btn-success:hover {
+    border: solid 2px #EBBE17 !important;
+}
+.btn-success:active {
+    background-color: #EBBE17 !important;
+  }
+.botonCategorias{
+    background-color: #005F9F !important;
+    width: 20%;
+    height: auto;
+}
+
+.botonPuestos{
+    background-color: #005F9F !important;
+    width: 20%;
+    height: auto;
+}
+
+.botonproductos {
+    width: 15em;
+    height: 15em;
+    background-color: #EB5717 !important;
+    
+}
+
+.botonPanelControl{
+    background-color: #005F9F !important;
+}
+
+
+.imgProducto{
+    text-align: center;
+    width: 10em;
+    height: 10em;
+}
+
 
 img {
     width: 50px;
     height: 50px;
-    border: solid 1px blue;
+}
+
+.img_avatar{
+    width: 100%;
+    height: auto;
 }
 
 
-.botonproductos {
-    width: 100px;
-    height: 100px;
-}
 
 .my-custom-scrollbar {
     position: relative;
-    height: 30vw;
+    height: 25vw;
     overflow: auto;
 }
 
@@ -44,13 +99,76 @@ height: 50px;
     display: none;
 }
 
+.btn img{
+    display: inline-block;
+    text-align: center;
+}
+
+.displayPrecio{
+    background-color: #4285F4;
+}
 
 .footer {
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
-    background-color: red;
-    color: white;
+    width: 110%;
+    background-color: #e8ebe9;
+    color: black;
     text-align: center;
- }
+}
+
+.cajaCobrar{
+    border-top: solid 2px #4C4A48;
+    border-bottom: solid 2px #4C4A48;
+    
+}
+
+.nombreUsuario{
+    text-align: left;
+}
+
+.btn-cobrar{
+background-color: #EB5717;
+}
+.btn-cancelar{
+background-color: #EBBE17;
+}
+.btn-eliminar{
+    background-color: #FE0000 !important;
+    color: white !important;
+    border: solid 2px black;
+}
+
+.btn-eliminar:hover{
+    background-color: #FE0000 !important;
+    color: white !important;
+    border: solid 2px black;
+}
+.btn-eliminar:active{
+    background-color: #EBBE17 !important;
+    color: white !important;
+    border: solid 2px black;
+}
+
+.btn-imprimir{
+    background-color: #EBBE17 !important;
+    color: black !important;
+    border: solid 2px black;
+}
+
+.btn-imprimir:hover{
+    background-color: #EBBE17 !important;
+    color: black !important;
+    border: solid 2px black;
+}
+.btn-imprimir:active{
+    background-color: #FE0000 !important;
+    color: black !important;
+    border: solid 2px black;
+}
+
+
+.botonProductoPedido{
+    background-color: white !important;
+}
