@@ -30,16 +30,18 @@ body{
 .btn-success:active {
     background-color: #EBBE17 !important;
   }
+
+
 .botonCategorias{
     background-color: #005F9F !important;
-    width: 20%;
-    height: auto;
+    width: 10em;
+    height: 10em;
 }
 
 .botonPuestos{
     background-color: #005F9F !important;
-    width: 20%;
-    height: auto;
+    width: 10em;
+    height: 10em;
 }
 
 .botonproductos {

@@ -199,7 +199,7 @@ var aplicacion = new Vue({
                     "email":this.emailUsuario,
                     "jefe":  this.jefe,
                     "avatar":this.avatarUsuario,
-                    "password":this.contrasenyaUsuario,                    
+                   /*  "password":this.contrasenyaUsuario,    */                 
                 },
                 { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })
                 .then(response => {
@@ -317,6 +317,7 @@ var aplicacion = new Vue({
                 })
         },
         eliminarPuesto(idPuesto) {
+            console.log(idPuesto)
             if (confirm("Estas seguro que deseas eliminar el puesto?")) {
                 axios.delete(localStorage.getItem('URL_API') + 'puestos/'+idPuesto,
                 { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem("access_token") } })

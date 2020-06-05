@@ -169,6 +169,7 @@ var aplicacion = new Vue({
                 this.puestoElegido = []
                 this.ingresoCliente = 0
                 this.actualizaDOM()
+                $("#modalCobrar").modal('toggle');
 
             } else {
                 alert(respuesta)
